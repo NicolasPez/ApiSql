@@ -4,4 +4,4 @@ sqlalchemy [asyncio]
 aiosqlite
 passlib [bcrypt]
 python-jose
-pydantic 
+pydantic  
