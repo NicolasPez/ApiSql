@@ -12,9 +12,8 @@ class Tarea(Base):
     descripcion = Column(String, nullable=False)
     completado = Column(Boolean, default=False)
     
-    # Relación con la tabla Usuario
-    usuario_id = Column(Integer, ForeignKey("usuarios.id"), nullable=False)  # Enlace a Usuario
-    usuario = relationship("Usuario", back_populates="tareas")  # Relación inversa
+    usuario_id = Column(Integer, ForeignKey("usuarios.id"), nullable=False)  
+    usuario = relationship("Usuario", back_populates="tareas")  
 
 class Usuario(Base):
     __tablename__ = "usuarios"
@@ -24,5 +23,4 @@ class Usuario(Base):
     hashed_password = Column(String, nullable=False)
     creado_en = Column(DateTime, server_default=func.now())
 
-    # Relación inversa con Tarea
     tareas = relationship("Tarea", back_populates="usuario")
