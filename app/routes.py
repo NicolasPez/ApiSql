@@ -57,5 +57,5 @@ async def eliminar_tarea(
     if not tarea_existente or tarea_existente.usuario_id != usuario_actual.id:
         raise HTTPException(status_code=404, detail="Tarea no encontrada")
     
-    await crud.eliminar_tarea(db, tarea_id)
+    await crud.eliminar_tarea(db, tarea_id) 
     return {"ok": True, "mensaje": f"Tarea {tarea_id} eliminada"}
