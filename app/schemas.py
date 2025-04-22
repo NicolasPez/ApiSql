@@ -9,7 +9,7 @@ class TareaBase(BaseModel):
         orm_mode = True
 
 class TareaCrear(TareaBase):
-    pass  # Se usa cuando se crea una tarea, no necesita ID
+    pass  
 
 class Tarea(TareaBase):
     id: int
