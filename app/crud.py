@@ -35,5 +35,5 @@ async def eliminar_tarea(db: AsyncSession, tarea_id: int):
     if tarea:
         await db.delete(tarea)
         await db.commit()
-        return 1
+        return 1 
     return 0
