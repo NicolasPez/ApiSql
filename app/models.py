@@ -23,4 +23,4 @@ class Usuario(Base):
     hashed_password = Column(String, nullable=False)
     creado_en = Column(DateTime, server_default=func.now())
 
-    tareas = relationship("Tarea", back_populates="usuario")
+    tareas = relationship("Tarea", back_populates="usuario") 
