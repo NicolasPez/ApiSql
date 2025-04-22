@@ -11,29 +11,25 @@ from fastapi import APIRouter
 from app import schemas
 from fastapi.security import HTTPAuthorizationCredentials
 
-# Configuraciones
-SECRET_KEY = "secret-key-super-segura"  # Cambiá esto por una key real en producción
+SECRET_KEY = "secret-key-super-segura"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = HTTPBearer(auto_error=False)
 
-# Funciones de hash
 def verificar_contraseña(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
 
 def hashear_contraseña(password):
     return pwd_context.hash(password)
 
-# Crear token JWT
 def crear_token(data: dict, expires_delta: timedelta | None = None):
     to_encode = data.copy()
     expire = datetime.utcnow() + (expires_delta or timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
     to_encode.update({"exp": expire})
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
-# Obtener usuario desde token
 async def obtener_usuario_actual(
     token: HTTPAuthorizationCredentials = Depends(oauth2_scheme), 
     db: AsyncSession = Depends(get_db)
@@ -59,7 +55,6 @@ async def obtener_usuario_actual(
 
 router = APIRouter(tags=["Autenticación"])
 
-# Registro
 @router.post("/registro", response_model=schemas.Usuario)
 async def registrar_usuario(usuario: schemas.UsuarioCrear, db: AsyncSession = Depends(get_db)):
     result = await db.execute(select(models.Usuario).where(models.Usuario.email == usuario.email))
@@ -74,7 +69,6 @@ async def registrar_usuario(usuario: schemas.UsuarioCrear, db: AsyncSession = De
     await db.refresh(nuevo_usuario)
     return nuevo_usuario
 
-# Login
 @router.post("/login", response_model=schemas.Token)
 async def login(usuario: schemas.UsuarioCrear, db: AsyncSession = Depends(get_db)):
     result = await db.execute(select(models.Usuario).where(models.Usuario.email == usuario.email))
