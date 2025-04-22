@@ -72,7 +72,7 @@ async def registrar_usuario(usuario: schemas.UsuarioCrear, db: AsyncSession = De
 @router.post("/login", response_model=schemas.Token)
 async def login(usuario: schemas.UsuarioCrear, db: AsyncSession = Depends(get_db)):
     result = await db.execute(select(models.Usuario).where(models.Usuario.email == usuario.email))
-    db_usuario = result.scalar_one_or_none()
+    db_usuario = result.scalar_one_or_none() 
     if not db_usuario or not verificar_contraseña(usuario.password, db_usuario.hashed_password):
         raise HTTPException(status_code=401, detail="Credenciales incorrectas")
 
