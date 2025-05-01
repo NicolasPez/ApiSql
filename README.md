@@ -24,7 +24,7 @@ La autenticación se maneja mediante **JWT (JSON Web Tokens)**.
 
 1. Clonar el repositorio:
    ```bash
-   git clone https://github.com/NicolasPez/ApiSql.git
+   git clone https://github.com/NicolasPez/FastApi-Python.git
    ```
 2. Crear y activar un entorno virtual:
 
